@@ -1,0 +1,36 @@
+{
+  "env": {
+    "es2020": true,
+    "node": true
+  },
+  "extends": ["standard", "prettier", "prettier/standard"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "standard",
+    "prettier",
+    "eslint-plugin-import-helpers"
+  ],
+  "ignorePatterns": ["dist/"],
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "prettier/prettier": "error",
+    "import-helpers/order-imports": [
+      "error",
+      {
+        "newlinesBetween": "always",
+        "groups": ["module", ["parent", "sibling", "index"]],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
+      }
+    ],
+    "no-useless-constructor": "off"
+  }
+}
