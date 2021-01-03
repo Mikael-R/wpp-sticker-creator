@@ -5,10 +5,11 @@ export default async function CreateAnimatedStickerFromVideo(
   message: Message
 ) {
   const { mimetype, from, sender } = message
+  const senderVocative = sender.pushname || sender.formattedName
 
   await client.sendText(
     from,
-    `*${sender.pushname}*, estou criando a sua figurinha aguarde. 🤩
+    `*${senderVocative}*, estou criando a sua figurinha aguarde. 🤩
 
 _As figurinhas animadas são feitas a partir dos primeiros 5 segundos de video._
     `
@@ -17,14 +18,14 @@ _As figurinhas animadas são feitas a partir dos primeiros 5 segundos de video._
   const mediaData = await decryptMedia(message)
   const base64data = mediaData.toString('base64')
 
-  await client
+  client
     .sendMp4AsSticker(from, `data:${mimetype};base64,${base64data}`)
-    .catch(async reason => {
-      console.log(reason)
+    .catch(reason => {
+      console.log(sender.formattedName, reason)
 
-      await client.sendText(
+      client.sendText(
         from,
-        '_Infelizmente(ou felizmente) devido a alta demanda, as figurinhas animadas estão temporariamente desabilitadas._'
+        '_Não foi possível criar sua figurinha, há algo de errado com seu arquivo._ 🤔'
       )
     })
 }

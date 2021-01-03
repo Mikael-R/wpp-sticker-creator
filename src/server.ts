@@ -10,16 +10,14 @@ function start(client: Client) {
   client.onMessage(async message => {
     const { type, isGroupMsg } = message
 
-    // Generate sticker from an image
     if (isGroupMsg === false && type === 'image') {
       await CreateStickerFromImage(client, message)
     }
 
-    // Generate an animated sticker from a video
     if (isGroupMsg === false && type === 'video') {
       await CreateAnimatedStickerFromVideo(client, message)
     }
   })
 
-  client.onAddedToGroup(({ id }) => client.leaveGroup(id.server))
+  client.onAddedToGroup(async ({ id }) => await client.leaveGroup(id.server))
 }

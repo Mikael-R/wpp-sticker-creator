@@ -5,25 +5,24 @@ export default async function CreateStickerFromImage(
   message: Message
 ) {
   const { mimetype, from, sender } = message
-
-  console.log(message)
+  const senderVocative = sender.pushname || sender.formattedName
 
   await client.sendText(
     from,
-    `*${sender.pushname}*, sua figurinha está sendo criada, aguarde! 🤩`
+    `*${senderVocative}*, sua figurinha está sendo criada, aguarde! 🤩`
   )
 
   const mediaData = await decryptMedia(message)
   const base64data = mediaData.toString('base64')
 
-  await client
+  client
     .sendImageAsSticker(from, `data:${mimetype};base64,${base64data}`)
-    .catch(async reason => {
-      console.log(reason)
+    .catch(reason => {
+      console.log(sender.formattedName, reason)
 
-      await client.sendText(
+      client.sendText(
         from,
-        '_Infelizmente(ou felizmente) devido a alta demanda, as figurinhas estão temporariamente desabilitadas._'
+        '_Não foi possível criar sua figurinha, há algo de errado com seu arquivo._ 🤔'
       )
     })
 }
