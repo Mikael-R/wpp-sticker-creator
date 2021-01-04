@@ -4,8 +4,6 @@ import { create, Client } from '@open-wa/wa-automate'
 import CreateAnimatedStickerFromVideo from './services/CreateAnimatedStickerFromVideo'
 import CreateStickerFromImage from './services/CreateStickerFromImage'
 
-create({ sessionData: process.env.SESSION_DATA }).then(client => start(client))
-
 function start(client: Client) {
   client.onMessage(async message => {
     const { type, isGroupMsg } = message
@@ -19,5 +17,9 @@ function start(client: Client) {
     }
   })
 
-  client.onAddedToGroup(async ({ id }) => await client.leaveGroup(id.server))
+  client.onAddedToGroup(
+    async chat => await client.leaveGroup(chat.groupMetadata.id)
+  )
 }
+
+create({ sessionData: process.env.SESSION_DATA }).then(client => start(client))
