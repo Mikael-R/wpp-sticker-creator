@@ -8,8 +8,8 @@
   },
   "scripts": {
     "format": "eslint src --ext ts",
-    "prod": "ts-node -r tsconfig-paths/register --transpile-only .",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules ."
+    "prod": "tsc && node --optimize_for_size --max_old_space_size=920 dist/server.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/server.ts"
   },
   "license": "MIT",
   "dependencies": {
