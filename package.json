@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@open-wa/wa-automate": "^3.1.0",
+    "@open-wa/wa-automate": "^3.2.6",
     "dotenv": "^8.2.0",
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.9.0",
